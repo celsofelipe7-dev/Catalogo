@@ -668,7 +668,7 @@
     ============================================================ */
     #gallery-overlay {
       position: fixed; inset: 0; z-index: 1100;
-      background: rgba(10,0,0,.88);
+      background: #0a0000;
       opacity: 0; pointer-events: none;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 2rem;
@@ -845,7 +845,9 @@
     }
 
     @media (max-width: 480px) {
-      .search-wrap { max-width: 140px; }
+      .nav-brand-text .tagline { display: none; }
+      .nav-brand-text .name { font-size: .88rem; }
+      .search-wrap { max-width: none; flex: 1; min-width: 90px; }
       #search-input { font-size: .78rem; padding: .5rem .8rem .5rem 2.2rem; }
       #hero { padding: 6rem 1rem 3rem; }
       .hero-badge { font-size: .62rem; }
