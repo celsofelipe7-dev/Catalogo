@@ -1,0 +1,1922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>J. Edivaldo Arte Sacra — Catálogo Litúrgico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       VARIÁVEIS GLOBAIS — altere aqui para mudar o tema
+    ============================================================ */
+    :root {
+      --bordo:    #4a0404;
+      --bordo-lt: #6b0606;
+      --dourado:  #c5a059;
+      --dourado-lt:#d9b87a;
+      --preto:    #1a1a1a;
+      --creme:    #fdfaf5;
+      --creme-dk: #f3ede2;
+      --cinza:    #888;
+      --sombra:   0 4px 28px rgba(74,4,4,.10);
+      --sombra-h: 0 8px 40px rgba(74,4,4,.18);
+      --radius:   6px;
+      --trans:    .25s ease;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--creme);
+      color: var(--preto);
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ============================================================
+       ORNAMENTO DIVISÓRIO
+    ============================================================ */
+    .ornament {
+      display: flex; align-items: center; gap: 1rem;
+      color: var(--dourado); font-size: .75rem; letter-spacing: .2em;
+      text-transform: uppercase; margin: 0 auto;
+    }
+    .ornament::before, .ornament::after {
+      content: ''; flex: 1; height: 1px; background: var(--dourado); opacity: .5;
+    }
+
+    /* ============================================================
+       NAVBAR
+    ============================================================ */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      background: var(--bordo);
+      border-bottom: 2px solid var(--dourado);
+      padding: .75rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem;
+      transition: box-shadow var(--trans);
+    }
+    #navbar.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,.35); }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: .75rem; flex-shrink: 0;
+    }
+    .nav-brand .cross-icon {
+      width: 32px; height: 32px; color: var(--dourado);
+    }
+    .nav-brand-text { line-height: 1.1; }
+    .nav-brand-text .name {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: 1.05rem; color: #fff; letter-spacing: .08em;
+    }
+    .nav-brand-text .tagline {
+      font-size: .6rem; color: var(--dourado-lt);
+      letter-spacing: .15em; text-transform: uppercase;
+    }
+
+    /* Barra de busca */
+    .search-wrap {
+      flex: 1; max-width: 420px; position: relative;
+    }
+    #search-input {
+      width: 100%;
+      padding: .55rem 1rem .55rem 2.6rem;
+      border: 1px solid rgba(197,160,89,.4);
+      border-radius: 30px;
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .85rem;
+      outline: none;
+      transition: border-color var(--trans), background var(--trans);
+    }
+    #search-input::placeholder { color: rgba(255,255,255,.45); }
+    #search-input:focus {
+      border-color: var(--dourado);
+      background: rgba(255,255,255,.15);
+    }
+    .search-icon {
+      position: absolute; left: .9rem; top: 50%; transform: translateY(-50%);
+      color: var(--dourado); pointer-events: none;
+    }
+
+    /* Botão WhatsApp nav */
+    .btn-whats-nav {
+      display: flex; align-items: center; gap: .4rem;
+      padding: .5rem 1rem;
+      border: 1px solid var(--dourado);
+      border-radius: 30px;
+      color: var(--dourado);
+      font-size: .78rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: background var(--trans), color var(--trans);
+      white-space: nowrap;
+    }
+    .btn-whats-nav:hover { background: var(--dourado); color: var(--bordo); }
+
+    /* Menu hamburger mobile */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      padding: 4px; background: none; border: none; cursor: pointer;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--dourado); border-radius: 2px;
+      transition: all var(--trans);
+    }
+
+    /* ============================================================
+       HERO SECTION
+    ============================================================ */
+    #hero {
+      position: relative; overflow: hidden;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 7rem 2rem 5rem;
+      background: var(--bordo);
+    }
+
+    /* Padrão de fundo geométrico */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(45deg, rgba(197,160,89,.07) 1px, transparent 1px),
+        linear-gradient(-45deg, rgba(197,160,89,.07) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(74,4,4,0) 0%, rgba(10,0,0,.55) 100%);
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 780px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .6rem;
+      border: 1px solid rgba(197,160,89,.5);
+      border-radius: 30px;
+      padding: .4rem 1.2rem;
+      color: var(--dourado);
+      font-size: .7rem; font-weight: 600; letter-spacing: .25em; text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: fadeDown .7s ease both;
+    }
+    .hero-badge svg { width: 14px; height: 14px; }
+
+    .hero-title {
+      font-family: 'Cinzel', serif; font-weight: 900;
+      font-size: clamp(2.4rem, 6vw, 5rem);
+      color: #fff; line-height: 1.05;
+      letter-spacing: .06em;
+      text-shadow: 0 4px 30px rgba(0,0,0,.5);
+      margin-bottom: .8rem;
+      animation: fadeDown .7s .15s ease both;
+    }
+    .hero-title span { color: var(--dourado); }
+
+    .hero-subtitle {
+      font-family: 'Cinzel', serif; font-weight: 400;
+      font-size: clamp(.95rem, 2vw, 1.3rem);
+      color: rgba(255,255,255,.75);
+      letter-spacing: .12em;
+      margin-bottom: 2.5rem;
+      animation: fadeDown .7s .3s ease both;
+    }
+
+    .hero-divider {
+      width: 120px; height: 1px; background: var(--dourado);
+      margin: 0 auto 2.5rem; opacity: .6;
+      animation: fadeDown .7s .45s ease both;
+    }
+
+    .hero-cta-group {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeDown .7s .6s ease both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .9rem 2rem;
+      background: var(--dourado);
+      color: var(--bordo);
+      font-weight: 700; font-size: .85rem; letter-spacing: .12em; text-transform: uppercase;
+      border-radius: var(--radius);
+      border: 2px solid var(--dourado);
+      box-shadow: 0 4px 20px rgba(197,160,89,.3);
+      transition: all var(--trans);
+    }
+    .btn-primary:hover {
+      background: var(--dourado-lt); border-color: var(--dourado-lt);
+      transform: translateY(-2px); box-shadow: 0 8px 30px rgba(197,160,89,.4);
+    }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .9rem 2rem;
+      border: 2px solid rgba(255,255,255,.3);
+      color: #fff;
+      font-weight: 600; font-size: .85rem; letter-spacing: .12em; text-transform: uppercase;
+      border-radius: var(--radius);
+      transition: all var(--trans);
+    }
+    .btn-outline:hover { border-color: var(--dourado); color: var(--dourado); }
+
+    /* Selos hero */
+    .hero-seals {
+      display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+      margin-top: 4rem;
+      animation: fadeDown .7s .75s ease both;
+    }
+    .seal {
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      color: rgba(255,255,255,.6);
+    }
+    .seal svg { color: var(--dourado); width: 28px; height: 28px; }
+    .seal-label {
+      font-size: .65rem; letter-spacing: .15em; text-transform: uppercase; font-weight: 500;
+    }
+    .seal-value {
+      font-family: 'Cinzel', serif; font-size: .9rem; color: #fff; font-weight: 600;
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      color: rgba(255,255,255,.4); font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+      animation: bounce 2s ease infinite;
+      z-index: 2;
+    }
+    .scroll-hint svg { width: 18px; height: 18px; }
+
+    /* ============================================================
+       SEÇÃO FILTROS
+    ============================================================ */
+    #catalogo { scroll-margin-top: 70px; }
+
+    .section-header {
+      text-align: center;
+      padding: 4rem 2rem 1rem;
+      background: var(--creme);
+    }
+    .section-label {
+      font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--dourado); font-weight: 600; margin-bottom: .8rem;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif; font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: var(--bordo); margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-size: .9rem; color: var(--cinza); max-width: 540px; margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    /* Filtros */
+    .filters-bar {
+      display: flex; gap: .6rem; justify-content: center; flex-wrap: wrap;
+      padding: 0 2rem 2.5rem;
+      background: var(--creme);
+    }
+    .filter-btn {
+      padding: .5rem 1.2rem;
+      border: 1.5px solid rgba(74,4,4,.2);
+      border-radius: 30px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--bordo);
+      background: transparent;
+      transition: all var(--trans);
+    }
+    .filter-btn:hover { border-color: var(--dourado); color: var(--dourado); }
+    .filter-btn.active {
+      background: var(--bordo); color: var(--dourado);
+      border-color: var(--bordo);
+    }
+
+    /* ============================================================
+       GRID DE PRODUTOS
+    ============================================================ */
+    #products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 0 2rem 4rem;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: #fff;
+      border: 1px solid rgba(197,160,89,.25);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--sombra);
+      display: flex; flex-direction: column;
+      transition: transform var(--trans), box-shadow var(--trans), border-color var(--trans);
+      animation: cardIn .5s ease both;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--sombra-h);
+      border-color: var(--dourado);
+    }
+
+    /* Área da imagem / ícone */
+    .product-img-wrap {
+      position: relative;
+      background: linear-gradient(135deg, var(--creme-dk) 0%, #ede7d9 100%);
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-bottom: 1.5px solid rgba(197,160,89,.25);
+    }
+
+    /* Imagem real do produto */
+    .product-photo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .45s ease;
+      z-index: 2;
+    }
+    .product-card:hover .product-photo { transform: scale(1.08); }
+
+    /* Moldura dourada sutil no hover */
+    .product-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      border: 2px solid transparent;
+      transition: border-color var(--trans);
+      z-index: 4;
+      pointer-events: none;
+    }
+    .product-card:hover .product-img-wrap::after {
+      border-color: rgba(197,160,89,.45);
+    }
+
+    /* Fallback: container do ícone SVG */
+    .product-icon-fallback {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1;
+    }
+    .product-icon-fallback::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(45deg, rgba(197,160,89,.06) 1px, transparent 1px),
+        linear-gradient(-45deg, rgba(197,160,89,.06) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .product-icon {
+      width: 90px; height: 90px;
+      color: var(--dourado); opacity: .7;
+      position: relative; z-index: 1;
+      transition: transform var(--trans), opacity var(--trans);
+    }
+    .product-card:hover .product-icon { transform: scale(1.08); opacity: 1; }
+
+    .product-badge {
+      position: absolute; top: .8rem; right: .8rem;
+      background: var(--bordo); color: var(--dourado);
+      font-size: .6rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+      padding: .25rem .7rem; border-radius: 30px;
+      z-index: 5;
+    }
+
+    /* Contador de fotos + lupa (aparece quando o produto tem 2+ fotos) */
+    .photo-count {
+      position: absolute; bottom: .7rem; right: .7rem;
+      display: flex; align-items: center; gap: .3rem;
+      background: rgba(26,26,26,.72);
+      color: #fff;
+      font-size: .68rem; font-weight: 600;
+      padding: .3rem .6rem; border-radius: 30px;
+      z-index: 5;
+      backdrop-filter: blur(2px);
+    }
+    .photo-count svg { width: 12px; height: 12px; }
+
+    /* Cursor de clique quando a imagem abre a galeria */
+    .product-img-wrap.has-gallery { cursor: zoom-in; }
+
+    /* Corpo do card */
+    .product-body {
+      padding: 1.2rem 1.4rem;
+      flex: 1; display: flex; flex-direction: column; gap: .6rem;
+    }
+    .product-category {
+      font-size: .62rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--dourado); font-weight: 600;
+    }
+    .product-name {
+      font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700;
+      color: var(--bordo); line-height: 1.3;
+    }
+    .product-desc {
+      font-size: .8rem; color: var(--cinza); line-height: 1.6; flex: 1;
+    }
+    .product-specs {
+      display: flex; gap: .8rem; flex-wrap: wrap; padding: .6rem 0;
+      border-top: 1px solid rgba(197,160,89,.2);
+      border-bottom: 1px solid rgba(197,160,89,.2);
+    }
+    .spec-item {
+      display: flex; flex-direction: column; gap: .1rem;
+    }
+    .spec-label {
+      font-size: .58rem; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--cinza);
+    }
+    .spec-value {
+      font-size: .78rem; font-weight: 600; color: var(--preto);
+    }
+
+    /* Preços */
+    .product-prices {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+    }
+    .price-item { display: flex; flex-direction: column; }
+    .price-label {
+      font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cinza);
+    }
+    .price-value {
+      font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700; color: var(--bordo);
+    }
+    .price-value.alt { color: var(--cinza); font-size: .9rem; font-weight: 600; }
+
+    /* Botão adicionar */
+    .btn-add {
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+      width: 100%; padding: .75rem;
+      background: var(--bordo);
+      color: var(--dourado);
+      font-size: .78rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+      border-radius: var(--radius);
+      border: 2px solid var(--bordo);
+      transition: all var(--trans);
+      margin-top: .4rem;
+    }
+    .btn-add:hover { background: var(--bordo-lt); border-color: var(--bordo-lt); }
+    .btn-add.added {
+      background: transparent; color: var(--bordo); border-color: var(--dourado);
+    }
+    .btn-add.added:hover { background: var(--bordo); color: var(--dourado); border-color: var(--bordo); }
+
+    /* Sem resultados */
+    #no-results {
+      display: none;
+      grid-column: 1/-1; text-align: center; padding: 4rem 2rem;
+    }
+    #no-results svg { color: var(--dourado); width: 48px; height: 48px; margin-bottom: 1rem; }
+    #no-results p { color: var(--cinza); font-size: .9rem; }
+
+    /* ============================================================
+       BOTÃO FLUTUANTE DO ORÇAMENTO
+    ============================================================ */
+    #budget-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 800;
+      display: flex; align-items: center; gap: .7rem;
+      background: var(--bordo);
+      color: var(--dourado);
+      border: 2px solid var(--dourado);
+      border-radius: 50px;
+      padding: .75rem 1.4rem;
+      font-weight: 700; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase;
+      box-shadow: 0 6px 30px rgba(74,4,4,.4);
+      transition: all var(--trans);
+      transform: translateY(100px) scale(.9);
+      opacity: 0;
+    }
+    #budget-float.visible {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    #budget-float:hover {
+      background: var(--dourado); color: var(--bordo);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 35px rgba(197,160,89,.4);
+    }
+    #budget-count {
+      background: #fff; color: var(--bordo);
+      font-size: .7rem; font-weight: 800;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .2s ease;
+    }
+    #budget-float:hover #budget-count { background: var(--bordo); color: var(--dourado-lt); }
+
+    /* ============================================================
+       MODAL DO ORÇAMENTO
+    ============================================================ */
+    #overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(10,0,0,.6);
+      backdrop-filter: blur(4px);
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--trans);
+    }
+    #overlay.open { opacity: 1; pointer-events: all; }
+
+    #budget-panel {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 1001;
+      width: min(480px, 100vw);
+      background: var(--creme);
+      box-shadow: -8px 0 60px rgba(0,0,0,.25);
+      display: flex; flex-direction: column;
+      transform: translateX(100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      border-left: 2px solid var(--dourado);
+    }
+    #budget-panel.open { transform: translateX(0); }
+
+    .panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 1.8rem;
+      background: var(--bordo);
+      border-bottom: 2px solid var(--dourado);
+      flex-shrink: 0;
+    }
+    .panel-header h2 {
+      font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 700;
+      color: #fff; letter-spacing: .08em;
+    }
+    .panel-header h2 span { color: var(--dourado); }
+    .btn-close {
+      color: rgba(255,255,255,.7); font-size: 1.4rem; line-height: 1;
+      padding: .2rem .4rem;
+      transition: color var(--trans);
+    }
+    .btn-close:hover { color: var(--dourado); }
+
+    /* Formulário no modal */
+    .panel-form {
+      padding: 1.4rem 1.8rem;
+      border-bottom: 1px solid rgba(197,160,89,.25);
+      flex-shrink: 0;
+    }
+    .panel-form h3 {
+      font-family: 'Cinzel', serif; font-size: .85rem; color: var(--bordo);
+      margin-bottom: .9rem; letter-spacing: .05em;
+    }
+    .form-row { display: flex; gap: .8rem; margin-bottom: .8rem; }
+    .form-field {
+      flex: 1; display: flex; flex-direction: column; gap: .3rem;
+    }
+    .form-field label {
+      font-size: .62rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--cinza); font-weight: 600;
+    }
+    .form-field input {
+      padding: .55rem .9rem;
+      border: 1.5px solid rgba(74,4,4,.2);
+      border-radius: var(--radius);
+      background: #fff;
+      font-family: 'Montserrat', sans-serif; font-size: .85rem;
+      color: var(--preto); outline: none;
+      transition: border-color var(--trans);
+    }
+    .form-field input:focus { border-color: var(--dourado); }
+
+    /* Lista de itens */
+    .panel-items {
+      flex: 1; overflow-y: auto; padding: 1.2rem 1.8rem;
+    }
+    .panel-items::-webkit-scrollbar { width: 4px; }
+    .panel-items::-webkit-scrollbar-track { background: transparent; }
+    .panel-items::-webkit-scrollbar-thumb { background: rgba(197,160,89,.3); border-radius: 4px; }
+
+    .panel-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%; gap: 1rem; color: var(--cinza); text-align: center;
+    }
+    .panel-empty svg { width: 48px; height: 48px; color: var(--dourado); opacity: .4; }
+    .panel-empty p { font-size: .85rem; line-height: 1.6; }
+
+    .budget-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: .9rem 0;
+      border-bottom: 1px solid rgba(197,160,89,.15);
+    }
+    .budget-item:last-child { border-bottom: none; }
+    .bi-icon {
+      width: 38px; height: 38px; border-radius: var(--radius);
+      background: var(--creme-dk); border: 1px solid rgba(197,160,89,.25);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      color: var(--dourado);
+    }
+    .bi-icon svg { width: 20px; height: 20px; }
+    .bi-info { flex: 1; }
+    .bi-name {
+      font-family: 'Cinzel', serif; font-size: .82rem; color: var(--bordo);
+      font-weight: 700; margin-bottom: .15rem;
+    }
+    .bi-cat {
+      font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cinza);
+    }
+    .bi-remove {
+      color: var(--cinza); font-size: 1.1rem; padding: .1rem .3rem;
+      transition: color var(--trans);
+    }
+    .bi-remove:hover { color: var(--bordo); }
+
+    /* Rodapé do panel */
+    .panel-footer {
+      padding: 1.2rem 1.8rem;
+      border-top: 2px solid rgba(197,160,89,.25);
+      flex-shrink: 0;
+    }
+    .btn-whatsapp {
+      display: flex; align-items: center; justify-content: center; gap: .7rem;
+      width: 100%; padding: 1rem;
+      background: #25d366; color: #fff;
+      font-weight: 700; font-size: .85rem; letter-spacing: .12em; text-transform: uppercase;
+      border-radius: var(--radius);
+      border: none;
+      transition: all var(--trans);
+      box-shadow: 0 4px 20px rgba(37,211,102,.3);
+    }
+    .btn-whatsapp:hover {
+      background: #1ebe5b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37,211,102,.4);
+    }
+    .btn-whatsapp:disabled { background: #aaa; box-shadow: none; transform: none; cursor: not-allowed; }
+    .btn-clear {
+      display: block; width: 100%; text-align: center;
+      margin-top: .6rem; font-size: .75rem; color: var(--cinza);
+      transition: color var(--trans);
+    }
+    .btn-clear:hover { color: var(--bordo); }
+
+    /* ============================================================
+       GALERIA DE FOTOS (LIGHTBOX)
+    ============================================================ */
+    #gallery-overlay {
+      position: fixed; inset: 0; z-index: 1100;
+      background: rgba(10,0,0,.88);
+      opacity: 0; pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2rem;
+      transition: opacity var(--trans);
+    }
+    #gallery-overlay.open { opacity: 1; pointer-events: all; }
+
+    .gallery-close {
+      position: absolute; top: 1.2rem; right: 1.5rem;
+      color: rgba(255,255,255,.75);
+      font-size: 2rem; line-height: 1;
+      padding: .3rem .5rem;
+      transition: color var(--trans);
+      z-index: 3;
+    }
+    .gallery-close:hover { color: var(--dourado); }
+
+    .gallery-stage {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; max-width: 900px;
+      flex: 1; min-height: 0;
+    }
+    .gallery-img {
+      max-width: 100%; max-height: 72vh;
+      object-fit: contain;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 60px rgba(0,0,0,.5);
+      border: 1px solid rgba(197,160,89,.3);
+    }
+    .gallery-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      border: 1.5px solid rgba(197,160,89,.5);
+      color: var(--dourado);
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--trans), border-color var(--trans);
+    }
+    .gallery-nav:hover { background: rgba(197,160,89,.2); border-color: var(--dourado); }
+    .gallery-nav.prev { left: -10px; }
+    .gallery-nav.next { right: -10px; }
+    .gallery-nav svg { width: 20px; height: 20px; }
+    .gallery-nav[disabled] { opacity: .25; pointer-events: none; }
+
+    .gallery-caption {
+      color: #fff; text-align: center; margin-top: 1.2rem;
+    }
+    .gallery-caption .g-name {
+      font-family: 'Cinzel', serif; font-size: .95rem; font-weight: 700;
+      color: var(--dourado); letter-spacing: .05em; margin-bottom: .3rem;
+    }
+    .gallery-caption .g-count {
+      font-size: .72rem; color: rgba(255,255,255,.55); letter-spacing: .1em; text-transform: uppercase;
+    }
+
+    .gallery-thumbs {
+      display: flex; gap: .6rem; margin-top: 1rem; flex-wrap: wrap; justify-content: center;
+      max-width: 900px;
+    }
+    .gallery-thumb {
+      width: 52px; height: 52px; border-radius: 4px;
+      object-fit: cover; cursor: pointer;
+      border: 2px solid transparent;
+      opacity: .55;
+      transition: opacity var(--trans), border-color var(--trans);
+    }
+    .gallery-thumb:hover { opacity: .85; }
+    .gallery-thumb.active { opacity: 1; border-color: var(--dourado); }
+
+    @media (max-width: 640px) {
+      .gallery-nav.prev { left: 0; }
+      .gallery-nav.next { right: 0; }
+      #gallery-overlay { padding: 1rem; }
+    }
+
+    /* ============================================================
+       SEÇÃO SOBRE / DIFERENCIAIS
+    ============================================================ */
+    #sobre {
+      background: var(--bordo);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    #sobre .section-label { color: var(--dourado-lt); }
+    #sobre .section-title { color: #fff; margin-bottom: 1rem; }
+    #sobre .section-desc { color: rgba(255,255,255,.65); margin-bottom: 3rem; }
+
+    .diferenciais {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem; max-width: 1000px; margin: 0 auto;
+    }
+    .diferencial {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(197,160,89,.25);
+      border-radius: var(--radius);
+      padding: 2rem 1.4rem;
+      transition: background var(--trans), border-color var(--trans);
+    }
+    .diferencial:hover { background: rgba(255,255,255,.09); border-color: var(--dourado); }
+    .diferencial svg {
+      width: 36px; height: 36px; color: var(--dourado); margin: 0 auto 1rem;
+    }
+    .diferencial h4 {
+      font-family: 'Cinzel', serif; font-size: .9rem; color: #fff;
+      margin-bottom: .5rem; font-weight: 600;
+    }
+    .diferencial p { font-size: .78rem; color: rgba(255,255,255,.55); line-height: 1.6; }
+
+    /* ============================================================
+       RODAPÉ
+    ============================================================ */
+    #footer {
+      background: var(--preto);
+      color: rgba(255,255,255,.5);
+      text-align: center; padding: 3rem 2rem;
+    }
+    .footer-logo {
+      font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 700;
+      color: var(--dourado); letter-spacing: .1em; margin-bottom: .5rem;
+    }
+    .footer-sub {
+      font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+      color: rgba(255,255,255,.35); margin-bottom: 1.5rem;
+    }
+    .footer-contact {
+      display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+      font-size: .8rem; margin-bottom: 2rem;
+    }
+    .footer-contact a { color: var(--dourado); transition: color var(--trans); }
+    .footer-contact a:hover { color: var(--dourado-lt); }
+    .footer-divider {
+      width: 60px; height: 1px; background: rgba(197,160,89,.3); margin: 1.5rem auto;
+    }
+    .footer-copy { font-size: .7rem; color: rgba(255,255,255,.25); }
+
+    /* ============================================================
+       ANIMAÇÕES
+    ============================================================ */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pop {
+      0%  { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100%{ transform: scale(1); }
+    }
+    .pop { animation: pop .25s ease; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 768px) {
+      #navbar { padding: .65rem 1rem; }
+      .search-wrap { max-width: 200px; }
+      .btn-whats-nav span { display: none; }
+      .btn-whats-nav { padding: .5rem .7rem; }
+      #hero { min-height: 90vh; padding: 6rem 1.5rem 4rem; }
+      .hero-seals { gap: 1.5rem; }
+      #products-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); padding: 0 1rem 3rem; }
+      .filters-bar { padding: 0 1rem 2rem; }
+      #budget-float { bottom: 1.2rem; right: 1.2rem; padding: .65rem 1rem; font-size: .75rem; }
+      .form-row { flex-direction: column; }
+    }
+
+    @media (max-width: 480px) {
+      .search-wrap { max-width: 140px; }
+      #search-input { font-size: .78rem; padding: .5rem .8rem .5rem 2.2rem; }
+      #hero { padding: 6rem 1rem 3rem; }
+      .hero-badge { font-size: .62rem; }
+      #products-grid { grid-template-columns: 1fr; }
+      .panel-form .form-row { gap: .6rem; }
+      #budget-float { border-radius: 50%; width: 56px; height: 56px; padding: 0; justify-content: center; }
+      #budget-float .float-text { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     BARRA DE NAVEGAÇÃO
+============================================================ -->
+<nav id="navbar">
+  <div class="nav-brand">
+    <!-- Ícone de Cruz -->
+    <svg class="cross-icon" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <line x1="20" y1="4" x2="20" y2="36"/>
+      <line x1="8" y1="14" x2="32" y2="14"/>
+    </svg>
+    <div class="nav-brand-text">
+      <div class="name">J. Edivaldo</div>
+      <div class="tagline">Arte Sacra · Desde 1978</div>
+    </div>
+  </div>
+
+  <div class="search-wrap">
+    <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input id="search-input" type="search" placeholder="Buscar peça litúrgica…" autocomplete="off" aria-label="Buscar produtos" />
+  </div>
+
+  <a href="https://wa.me/5532984497932" target="_blank" class="btn-whats-nav" aria-label="Contato WhatsApp">
+    <!-- Ícone WhatsApp -->
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.523 5.845L.057 23.929a.75.75 0 0 0 .914.914l6.084-1.466A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-2.028 0-3.93-.544-5.563-1.49l-.35-.205-3.873.933.949-3.868-.222-.363A10.452 10.452 0 0 1 1.5 12C1.5 6.201 6.201 1.5 12 1.5S22.5 6.201 22.5 12 17.799 22.5 12 22.5z"/>
+    </svg>
+    <span>WhatsApp</span>
+  </a>
+</nav>
+
+
+<!-- ============================================================
+     HERO SECTION
+============================================================ -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+      Excelência em Arte Litúrgica Artesanal
+    </div>
+
+    <h1 class="hero-title">
+      J. Edivaldo<br/><span>Arte Sacra</span>
+    </h1>
+    <p class="hero-subtitle">Excelência em Fundição e Arte Litúrgica desde 1978</p>
+
+    <div class="hero-divider"></div>
+
+    <div class="hero-cta-group">
+      <a href="#catalogo" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Ver Catálogo Completo
+      </a>
+      <a href="#sobre" class="btn-outline">Nossa História</a>
+    </div>
+
+    <div class="hero-seals">
+      <div class="seal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span class="seal-label">Tradição</span>
+        <span class="seal-value">+45 anos</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <span class="seal-label">Produção</span>
+        <span class="seal-value">Artesanal</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span class="seal-label">Origem</span>
+        <span class="seal-value">São João Del Rei</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span class="seal-label">Atendimento</span>
+        <span class="seal-value">Paróquias</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Ver catálogo</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     CATÁLOGO
+============================================================ -->
+<section id="catalogo">
+  <div class="section-header">
+    <div class="section-label">✦ Catálogo Litúrgico ✦</div>
+    <h2 class="section-title">Peças para a Casa do Senhor</h2>
+    <p class="section-desc">
+      Cada peça é fundida e acabada à mão em São João Del Rei — MG,
+      cidade historicamente consagrada à arte sacra brasileira.
+      Disponível em metal polido e niquelado.
+    </p>
+  </div>
+
+  <!-- FILTROS DE CATEGORIA -->
+  <div class="filters-bar" role="toolbar" aria-label="Filtros de categoria">
+    <button class="filter-btn active" data-cat="Todos">Todos</button>
+    <button class="filter-btn" data-cat="Conjuntos">Conjuntos</button>
+    <button class="filter-btn" data-cat="Castiçais">Castiçais</button>
+    <button class="filter-btn" data-cat="Cruzes">Cruzes</button>
+    <button class="filter-btn" data-cat="Carrilhões">Carrilhões</button>
+    <button class="filter-btn" data-cat="Círios">Círios</button>
+    <button class="filter-btn" data-cat="Outros">Outros</button>
+  </div>
+
+  <!-- GRID -->
+  <div id="products-grid" role="list" aria-label="Produtos">
+    <div id="no-results" role="status" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <p>Nenhuma peça encontrada para sua busca.<br/>Tente outro termo ou categoria.</p>
+    </div>
+    <!-- Cards gerados via JavaScript -->
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SOBRE / DIFERENCIAIS
+============================================================ -->
+<section id="sobre">
+  <div class="section-label">✦ Nossa Tradição ✦</div>
+  <h2 class="section-title">Artesanato que Honra a Fé</h2>
+  <p class="section-desc">
+    Fundada em 1978, a J. Edivaldo Arte Sacra produz peças litúrgicas de altíssima qualidade
+    para paróquias, igrejas e seminários em todo o Brasil.
+    Cada peça carrega a tradição secular de São João Del Rei na arte sacra.
+  </p>
+
+  <div class="diferenciais">
+    <div class="diferencial">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/>
+        <path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+        <path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/>
+        <path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/>
+        <path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/>
+        <path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/>
+        <path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/>
+        <path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/>
+      </svg>
+      <h4>Fundição Artesanal</h4>
+      <p>Processo tradicional de fundição em metal, preservando técnicas centenárias com precisão artística.</p>
+    </div>
+    <div class="diferencial">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <h4>Qualidade Garantida</h4>
+      <p>Cada peça passa por inspeção rigorosa antes de chegar à sua paróquia. Durabilidade para gerações.</p>
+    </div>
+    <div class="diferencial">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      <h4>São João Del Rei</h4>
+      <p>Produzimos no coração histórico da arte sacra mineira, cidade consagrada pela tradição religiosa.</p>
+    </div>
+    <div class="diferencial">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <h4>Atendimento Direto</h4>
+      <p>Sem intermediários. Fale diretamente com o fabricante e receba o melhor preço para sua paróquia.</p>
+    </div>
+    <div class="diferencial">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+        <circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+      <h4>Entrega para Todo o Brasil</h4>
+      <p>Embalagem especial para proteção das peças. Enviamos para paróquias em todo o território nacional.</p>
+    </div>
+    <div class="diferencial">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+      </svg>
+      <h4>Preço de Fábrica</h4>
+      <p>Condições especiais para encomendas de conjuntos completos e pedidos em quantidade para paróquias.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     RODAPÉ
+============================================================ -->
+<footer id="footer">
+  <div class="footer-logo">J. Edivaldo Arte Sacra</div>
+  <div class="footer-sub">Fundição e Arte Litúrgica Artesanal · São João Del Rei — MG</div>
+
+  <div class="footer-contact">
+    <!-- ⚙️ ALTERE o número do WhatsApp abaixo (formato: 55 + DDD + número) -->
+    <a href="https://wa.me/5532984497932" target="_blank">📲 WhatsApp: (32) 98449-7932</a>
+    <span>📍 São João Del Rei, MG</span>
+    <span>⛪ Atendimento a Paróquias</span>
+  </div>
+
+  <div class="footer-divider"></div>
+  <p class="footer-copy">© 2024 J. Edivaldo Arte Sacra — Todos os direitos reservados</p>
+</footer>
+
+
+<!-- ============================================================
+     BOTÃO FLUTUANTE DO ORÇAMENTO
+============================================================ -->
+<button id="budget-float" aria-label="Abrir lista de orçamento" onclick="openPanel()">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+    <line x1="3" y1="6" x2="21" y2="6"/>
+    <path d="M16 10a4 4 0 0 1-8 0"/>
+  </svg>
+  <span class="float-text">Orçamento</span>
+  <span id="budget-count">0</span>
+</button>
+
+
+<!-- ============================================================
+     OVERLAY + PAINEL DE ORÇAMENTO
+============================================================ -->
+<div id="overlay" onclick="closePanel()"></div>
+
+<aside id="budget-panel" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+  <div class="panel-header">
+    <h2 id="panel-title">Lista de <span>Orçamento</span></h2>
+    <button class="btn-close" onclick="closePanel()" aria-label="Fechar painel">✕</button>
+  </div>
+
+  <!-- Formulário de identificação -->
+  <div class="panel-form">
+    <h3>✦ Seus Dados para Contato</h3>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="f-nome">Seu Nome</label>
+        <input type="text" id="f-nome" placeholder="Pe. João Silva" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label for="f-paroquia">Nome da Paróquia</label>
+        <input type="text" id="f-paroquia" placeholder="Paróquia Nossa Senhora…" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Lista de itens -->
+  <div class="panel-items" id="panel-items-list">
+    <div class="panel-empty">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <p>Nenhuma peça adicionada ainda.<br/>Clique em <strong>"Adicionar ao Orçamento"</strong> nos produtos desejados.</p>
+    </div>
+  </div>
+
+  <!-- Rodapé do painel -->
+  <div class="panel-footer">
+    <button class="btn-whatsapp" id="btn-send-wpp" onclick="sendWhatsApp()" disabled>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.523 5.845L.057 23.929a.75.75 0 0 0 .914.914l6.084-1.466A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22.5c-2.028 0-3.93-.544-5.563-1.49l-.35-.205-3.873.933.949-3.868-.222-.363A10.452 10.452 0 0 1 1.5 12C1.5 6.201 6.201 1.5 12 1.5S22.5 6.201 22.5 12 17.799 22.5 12 22.5z"/>
+      </svg>
+      Solicitar Orçamento via WhatsApp
+    </button>
+    <button class="btn-clear" onclick="clearBudget()">Limpar lista</button>
+  </div>
+</aside>
+
+
+<!-- ============================================================
+     GALERIA DE FOTOS (LIGHTBOX)
+============================================================ -->
+<div id="gallery-overlay" role="dialog" aria-modal="true" aria-label="Galeria de fotos do produto">
+  <button class="gallery-close" onclick="closeGallery()" aria-label="Fechar galeria">✕</button>
+
+  <div class="gallery-stage">
+    <button class="gallery-nav prev" onclick="galleryPrev()" aria-label="Foto anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <img class="gallery-img" id="gallery-img" src="" alt="" />
+    <button class="gallery-nav next" onclick="galleryNext()" aria-label="Próxima foto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <div class="gallery-caption">
+    <div class="g-name" id="gallery-name"></div>
+    <div class="g-count" id="gallery-count"></div>
+  </div>
+
+  <div class="gallery-thumbs" id="gallery-thumbs"></div>
+</div>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+/* ============================================================
+   ⚙️ CONFIGURAÇÕES — altere aqui
+============================================================ */
+const CONFIG = {
+  // Número do WhatsApp (formato internacional: 55 + DDD + número, sem espaços ou símbolos)
+  whatsappNumber: '5532984497932',
+};
+
+/* ============================================================
+   ⚙️ PRODUTOS — altere nomes, medidas e preços aqui
+   Campos:
+     id        : identificador único (não altere)
+     name      : nome do produto
+     category  : Conjuntos | Castiçais | Cruzes | Carrilhões | Círios | Outros
+     desc      : descrição curta
+     specs     : array de { label, value }
+     precoMetal: preço em metal polido (string, ex: "R$ 450,00")
+     precoNiq  : preço em niquelado (string, ex: "R$ 380,00") — use null se não houver
+     precoBanho: preço para banho (string, ex: "R$ 200,00") — use null se não houver
+     destaque  : true/false para exibir selo "Destaque"
+     icon      : nome do ícone SVG interno (candle | cross | bell | set | other | crown)
+     images    : array de caminhos de foto, ex: ['images/foto1.jpg', 'images/foto2.jpg']
+                 — pode ter 0, 1 ou várias fotos. Com 2+ fotos, o card mostra um
+                 contador (ex: "1/4") e o cliente pode abrir a galeria completa.
+                 Sem foto (array vazio []), o card usa o ícone de reserva.
+============================================================ */
+const products = [
+
+  /* === CONJUNTOS ============================================= */
+  {
+    id: 'conjunto-beneditino-7',
+    name: 'Conjunto Beneditino 7 Peças com Cruz',
+    category: 'Conjuntos',
+    desc: 'Conjunto completo composto por 4 castiçais, 1 cruz e 1 porta-missal. Acabamento primoroso em metal fundido.',
+    specs: [{ label: 'Castiçais', value: '40 cm' }, { label: 'Cruz', value: '50 cm' }],
+    precoMetal: 'R$ 1.850,00',
+    precoNiq:   'R$ 1.550,00',
+    precoBanho: 'R$ 400,00',
+    images: [
+      'images/beneditino/beneditino2.jpeg',
+      'images/beneditino/beneditino3.jpeg',
+      'images/beneditino/beneditino4.jpeg'
+    ],
+    destaque: true,
+    icon: 'set',
+  },
+  {
+    id: 'conjunto-neogotico-7',
+    name: 'Conjunto Gótico 7 Peças',
+    category: 'Conjuntos',
+    desc: 'Conjunto neogótico com 6 castiçais e 1 cruz central. Design inspirado nas catedrais medievais europeias.',
+    specs: [{ label: 'Castiçais', value: '35 cm' }, { label: 'Cruz', value: '60 cm' }, { label: 'Cruz', value: '60 cm' }],
+    precoMetal: 'R$ 2.200,00',
+    precoNiq:   'R$ 1.900,00',
+    precoBanho: 'R$ 400,00',
+    images: [],
+    destaque: false,
+    icon: 'set',
+  },
+  {
+    id: 'conjunto-romano-6',
+    name: 'Conjunto Donzelas 7 Peças com Cruz',
+    category: 'Conjuntos',
+    desc: 'Linhas esguias e elegantes. Ideal para altares de missas solenes e celebrações especiais.',
+    specs: [{ label: 'Castiçais', value: '33 cm' }, { label: 'Cruz', value: '45 cm' }],
+    precoMetal: 'R$ 1.650,00',
+    precoNiq:   'R$ 1.380,00',
+    precoBanho: 'R$ 400,00',
+    images: [
+      'images/conjunto-romano.jpeg',
+      'images/conjunto-romano-avulso.jpeg',
+      'images/conjunto-romano-base.jpeg',
+      'images/conjunto-romano-topo.jpeg',
+      'images/conjunto-romano-detalhe.jpeg',
+    ],
+    destaque: false,
+    icon: 'set',
+  },
+  {
+    id: 'conjunto-santissima-trindade',
+    name: 'Conjunto Santíssima Trindade 6 Peças',
+    category: 'Conjuntos',
+    desc: 'Conjunto com 6 castiçais e cruz central, coluna canelada e base tripé com medalhão. Disponível em 43, 55, 70 ou 86 cm.',
+    specs: [{ label: 'Tamanhos', value: '43 / 55 / 70 / 86 cm' }, { label: 'Acabamento', value: 'Metal Polido' }, { label: 'Acabamento', value: 'Niquelado' }],
+    precoMetal: 'R$ 2.899,00',
+    precoNiq:   'R$ 3.899,00',
+    images: [
+      'images/conjunto-santissima-trindade.jpeg',
+      'images/conjunto-santissima-completo-dourado.jpeg',
+      'images/conjunto-santissima-niquelado.jpeg',
+      'images/conjunto-santissima-completo-niquelado.jpeg',
+      'images/conjunto-santissima-topo.jpeg',
+      'images/conjunto-santissima-base-niquelado.jpeg',
+      'images/conjunto-santissima-bases-niquelado.jpeg',
+    ],
+    destaque: false,
+    icon: 'set',
+  },
+  {
+    id: 'conjunto-pascual-3',
+    name: 'Conjunto Pascual 3 Peças',
+    category: 'Conjuntos',
+    desc: 'Mini conjunto para altares laterais e nichos. Dois castiçais e uma cruz em estilo simples e elegante.',
+    specs: [{ label: 'Castiçais', value: '20 cm' }, { label: 'Cruz', value: '35 cm' }],
+    precoMetal: 'R$ 780,00',
+    precoNiq:   'R$ 650,00',
+    images: [],
+    destaque: false,
+    icon: 'set',
+  },
+
+  /* === CASTIÇAIS ============================================= */
+  {
+    id: 'castical-altar-maior-par',
+    name: 'Castiçal Beneditino',
+    category: 'Castiçais',
+    desc: 'Par de castiçais para altar-mor, com base sextavada e fuste torso. Fundição sólida de alta resistência.',
+    specs: [{ label: 'Altura', value: '60 cm' }, { label: 'Base', value: '14 cm' }],
+    precoMetal: 'R$ 680,00',
+    precoNiq:   'R$ 560,00',
+    images: [
+      'images/beneditino/casticalbeneditino.jpeg',
+      'images/beneditino/beneditino1.jpeg',
+      'images/beneditino/beneditino3.jpeg',
+    ],
+    destaque: false,
+    icon: 'candle',
+  },
+  {
+    id: 'castical-procissional-par',
+    name: 'Castiçal Procissional — Par',
+    category: 'Castiçais',
+    desc: 'Castiçal com haste longa para uso em procissões e cortejos litúrgicos. Encaixe para mastro opcional.',
+    specs: [{ label: 'Altura', value: '110 cm' }, { label: 'Base', value: '16 cm' }],
+    precoMetal: 'R$ 890,00',
+    precoNiq:   'R$ 740,00',
+    images: [],
+    destaque: true,
+    icon: 'candle',
+  },
+  {
+    id: 'castical-setimo-ceu-par',
+    name: 'Castiçal Gótico',
+    category: 'Castiçais',
+    desc: 'Design inspirado no estilo gótico, com pés em forma de grifo e recorte de cruz vazada na base. Disponível em 40, 50, 60 ou 80 cm.',
+    specs: [{ label: 'Altura', value: '40 a 80 cm' }, { label: 'Acabamento', value: 'Metal Polido' }],
+    precoMetal: 'R$ 520,00',
+    precoNiq:   'R$ 430,00',
+    images: [
+      'images/castical-setimo-ceu.jpeg',
+      'images/castical-setimo-ceu-conjunto.jpeg',
+      'images/castical-setimo-ceu-base.jpeg',
+      'images/castical-setimo-ceu-topo.jpeg',
+      'images/castical-setimo-ceu-cruz.jpeg',
+    ],
+    destaque: false,
+    icon: 'candle',
+  },
+  {
+    id: 'castical-simples-par',
+    name: 'Castiçal Simples — Par',
+    category: 'Castiçais',
+    desc: 'Modelo econômico sem abrir mão da qualidade. Perfeito para capelas e oratórios menores.',
+    specs: [{ label: 'Altura', value: '25 cm' }, { label: 'Base', value: '9 cm' }],
+    precoMetal: 'R$ 290,00',
+    precoNiq:   'R$ 240,00',
+    images: [],
+    destaque: false,
+    icon: 'candle',
+  },
+
+  /* === CRUZES ================================================ */
+  {
+    id: 'cruz-altar-com-cristo',
+    name: 'Cruz de Altar com Cristo',
+    category: 'Cruzes',
+    desc: 'Crucifixo de altar com Cristo em relevo artístico. Base sextavada estável. Acabamento detalhado.',
+    specs: [{ label: 'Altura total', value: '55 cm' }, { label: 'Largura', value: '28 cm' }],
+    precoMetal: 'R$ 480,00',
+    precoNiq:   'R$ 390,00',
+    images: [],
+    destaque: true,
+    icon: 'cross',
+  },
+  {
+    id: 'cruz-de-malta-altar',
+    name: 'Cruz de Malta — Altar',
+    category: 'Cruzes',
+    desc: 'Cruz estilo Malta, sem corpus. Design geométrico sofisticado, ideal para ambientes contemporâneos.',
+    specs: [{ label: 'Altura total', value: '48 cm' }, { label: 'Largura', value: '22 cm' }],
+    precoMetal: 'R$ 380,00',
+    precoNiq:   'R$ 310,00',
+    images: [],
+    destaque: false,
+    icon: 'cross',
+  },
+  {
+    id: 'cruz-procissional-haste',
+    name: 'Cruz Procissional com Haste',
+    category: 'Cruzes',
+    desc: 'Cruz para uso em procissões com encaixe para haste de madeira. Dupla face, com e sem Cristo.',
+    specs: [{ label: 'Cruz', value: '45 × 30 cm' }, { label: 'Haste', value: 'Opcional' }],
+    precoMetal: 'R$ 550,00',
+    precoNiq:   'R$ 460,00',
+    images: [],
+    destaque: false,
+    icon: 'cross',
+  },
+  {
+    id: 'cruz-peitoral-padre',
+    name: 'Cruz Peitoral — Padre',
+    category: 'Cruzes',
+    desc: 'Cruz peitoral para uso sacerdotal com corrente inclusa. Acabamento impecável, leve e resistente.',
+    specs: [{ label: 'Tamanho', value: '8 × 5 cm' }, { label: 'Corrente', value: '60 cm' }],
+    precoMetal: 'R$ 195,00',
+    precoNiq:   null,
+    images: [],
+    destaque: false,
+    icon: 'cross',
+  },
+
+  /* === CARRILHÕES ============================================ */
+  {
+    id: 'carrilhao-missa-4-sinos',
+    name: 'Carrilhão de Missa — 4 Sinos',
+    category: 'Carrilhões',
+    desc: 'Carrilhão tradicional de missa com 4 sinos em bronze fundido. Som puro e ressonante. Cabo em madeira nobre.',
+    specs: [{ label: 'Sinos', value: '4 unid.' }, { label: 'Material', value: 'Bronze' }],
+    precoMetal: 'R$ 320,00',
+    precoNiq:   null,
+    images: [],
+    destaque: true,
+    icon: 'bell',
+  },
+  {
+    id: 'carrilhao-missa-5-sinos',
+    name: 'Carrilhão de Missa — 5 Sinos',
+    category: 'Carrilhões',
+    desc: 'Versão com 5 sinos para maior variação sonora na liturgia. Ideal para missas solenes.',
+    specs: [{ label: 'Sinos', value: '5 unid.' }, { label: 'Material', value: 'Bronze' }],
+    precoMetal: 'R$ 390,00',
+    precoNiq:   null,
+    images: [],
+    destaque: false,
+    icon: 'bell',
+  },
+  {
+    id: 'sino-de-sacristia',
+    name: 'Sino de Sacristia',
+    category: 'Carrilhões',
+    desc: 'Sino individual para sacristia ou entrada de convento. Som grave e profundo, com cabo torneado.',
+    specs: [{ label: 'Diâmetro', value: '12 cm' }, { label: 'Material', value: 'Bronze' }],
+    precoMetal: 'R$ 180,00',
+    precoNiq:   null,
+    images: [],
+    destaque: false,
+    icon: 'bell',
+  },
+
+  /* === CÍRIOS =============================================== */
+  {
+    id: 'castical-cirio-pascal',
+    name: 'Castiçal para Círio Pascal',
+    category: 'Círios',
+    desc: 'Suporte de chão para círio pascal. Base robusta, fuste articulado e regulável. Acabamento nobre.',
+    specs: [{ label: 'Altura', value: '130 cm' }, { label: 'Diâm. encaixe', value: '6–8 cm' }],
+    precoMetal: 'R$ 1.100,00',
+    precoNiq:   'R$ 920,00',
+    images: [],
+    destaque: false,
+    icon: 'candle',
+  },
+  {
+    id: 'porta-cirio-ambao',
+    name: 'Porta-Círio de Ambão',
+    category: 'Círios',
+    desc: 'Castiçal compacto para posicionamento ao lado do ambão. Design elegante que não obstrui a visão.',
+    specs: [{ label: 'Altura', value: '90 cm' }, { label: 'Diâm. encaixe', value: '4–6 cm' }],
+    precoMetal: 'R$ 680,00',
+    precoNiq:   'R$ 570,00',
+    images: [],
+    destaque: false,
+    icon: 'candle',
+  },
+
+  /* === OUTROS ================================================ */
+  {
+    id: 'porta-missal-estante',
+    name: 'Porta-Missal Estante',
+    category: 'Outros',
+    desc: 'Suporte articulado para missal sobre o altar. Inclinação regulável, base antiderrapante.',
+    specs: [{ label: 'Largura', value: '35 cm' }, { label: 'Material', value: 'Metal fundido' }],
+    precoMetal: 'R$ 280,00',
+    precoNiq:   'R$ 230,00',
+    images: [],
+    destaque: false,
+    icon: 'other',
+  },
+  {
+    id: 'turibulo-completo-naveta',
+    name: 'Turíbulo Completo com Naveta',
+    category: 'Outros',
+    desc: 'Turíbulo artesanal com correntes em metal e naveta. Peça completa para liturgia com incenso.',
+    specs: [{ label: 'Altura c/ corrente', value: '80 cm' }, { label: 'Peças', value: '2 (turíbulo + naveta)' }],
+    precoMetal: 'R$ 890,00',
+    precoNiq:   'R$ 740,00',
+    images: [],
+    destaque: true,
+    icon: 'crown',
+  },
+  {
+    id: 'aspersorio-hissope',
+    name: 'Aspersório com Hissope',
+    category: 'Outros',
+    desc: 'Aspersório com hissope e corrente. Fundição sólida, fácil manutenção. Utilizado na bênção da água.',
+    specs: [{ label: 'Comprimento', value: '30 cm' }, { label: 'Material', value: 'Metal polido' }],
+    precoMetal: 'R$ 195,00',
+    precoNiq:   'R$ 160,00',
+    images: [],
+    destaque: false,
+    icon: 'other',
+  },
+  {
+    id: 'campainha-de-mesa',
+    name: 'Campainha de Mesa',
+    category: 'Outros',
+    desc: 'Campainha em metal fundido para uso na sacristia ou mesa presidencial. Design clássico.',
+    specs: [{ label: 'Diâmetro', value: '8 cm' }, { label: 'Material', value: 'Metal/Bronze' }],
+    precoMetal: 'R$ 95,00',
+    precoNiq:   null,
+    images: [],
+    destaque: false,
+    icon: 'bell',
+  },
+  {
+    id: 'coroa-nossa-senhora',
+    name: 'Coroa de Nossa Senhora',
+    category: 'Outros',
+    desc: 'Coroa artesanal para imagem de Nossa Senhora. Acabamento dourado ou niquelado, tamanho P/M/G.',
+    specs: [{ label: 'Tamanhos', value: 'P / M / G' }, { label: 'Material', value: 'Metal fundido' }],
+    precoMetal: 'R$ 220,00',
+    precoNiq:   'R$ 180,00',
+    images: [],
+    destaque: false,
+    icon: 'crown',
+  },
+];
+
+/* ============================================================
+   ÍCONES SVG INTERNOS
+============================================================ */
+const ICONS = {
+  candle: `<svg class="product-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 6c0 0-3-4-3-6 0 0 6 2 6 6-1.5 0-3 0-3 0z" fill="currentColor" opacity=".4"/>
+    <rect x="19" y="6" width="10" height="28" rx="1.5"/>
+    <path d="M15 34h18l-2 8H17l-2-8z"/>
+    <line x1="24" y1="6" x2="24" y2="34"/>
+  </svg>`,
+
+  cross: `<svg class="product-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <line x1="24" y1="4" x2="24" y2="44"/>
+    <line x1="10" y1="16" x2="38" y2="16"/>
+    <ellipse cx="24" cy="15" rx="4" ry="5" fill="currentColor" opacity=".2" stroke="none"/>
+    <rect x="20" y="40" width="8" height="6" rx="1" fill="currentColor" opacity=".3" stroke="none"/>
+  </svg>`,
+
+  bell: `<svg class="product-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 4C14 4 10 14 10 22v10h28V22c0-8-4-18-14-18z"/>
+    <path d="M10 32h28"/>
+    <path d="M20 36c0 2.2 1.8 4 4 4s4-1.8 4-4"/>
+    <line x1="24" y1="4" x2="24" y2="7"/>
+  </svg>`,
+
+  set: `<svg class="product-icon" viewBox="0 0 60 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="10" width="7" height="22" rx="1"/>
+    <rect x="2" y="32" width="11" height="5" rx="1"/>
+    <rect x="16" y="6" width="7" height="26" rx="1"/>
+    <rect x="14" y="32" width="11" height="5" rx="1"/>
+    <line x1="30" y1="2" x2="30" y2="38"/>
+    <line x1="21" y1="14" x2="39" y2="14"/>
+    <rect x="38" y="6" width="7" height="26" rx="1"/>
+    <rect x="36" y="32" width="11" height="5" rx="1"/>
+    <rect x="50" y="10" width="7" height="22" rx="1"/>
+    <rect x="48" y="32" width="11" height="5" rx="1"/>
+  </svg>`,
+
+  other: `<svg class="product-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="8" y="14" width="32" height="28" rx="2"/>
+    <path d="M16 14V10a8 8 0 0 1 16 0v4"/>
+    <line x1="24" y1="22" x2="24" y2="34"/>
+    <line x1="18" y1="28" x2="30" y2="28"/>
+  </svg>`,
+
+  crown: `<svg class="product-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 34 L12 16 L24 28 L36 16 L44 34 Z"/>
+    <rect x="4" y="34" width="40" height="6" rx="1"/>
+    <circle cx="24" cy="10" r="3" fill="currentColor" opacity=".3"/>
+    <circle cx="4" cy="34" r="2.5" fill="currentColor" opacity=".3"/>
+    <circle cx="44" cy="34" r="2.5" fill="currentColor" opacity=".3"/>
+  </svg>`,
+};
+
+/* ============================================================
+   ESTADO DA APLICAÇÃO
+============================================================ */
+let budgetList  = [];
+let activeFilter = 'Todos';
+let searchTerm   = '';
+
+// Estado da galeria de fotos
+let galleryPhotos = [];
+let galleryName    = '';
+let galleryIndex   = 0;
+
+/* ============================================================
+   RENDERIZAR CARDS
+============================================================ */
+function renderProducts() {
+  const grid     = document.getElementById('products-grid');
+  const noResult = document.getElementById('no-results');
+
+  // Filtrar
+  const filtered = products.filter(p => {
+    const matchCat  = activeFilter === 'Todos' || p.category === activeFilter;
+    const matchSrch = p.name.toLowerCase().includes(searchTerm) ||
+                      p.category.toLowerCase().includes(searchTerm) ||
+                      p.desc.toLowerCase().includes(searchTerm);
+    return matchCat && matchSrch;
+  });
+
+  // Remover cards anteriores (manter o no-results)
+  grid.querySelectorAll('.product-card').forEach(c => c.remove());
+
+  if (filtered.length === 0) {
+    noResult.style.display = 'flex';
+    return;
+  }
+  noResult.style.display = 'none';
+
+  filtered.forEach((p, idx) => {
+    const inBudget = budgetList.some(b => b.id === p.id);
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.setAttribute('role', 'listitem');
+    card.style.animationDelay = `${idx * 60}ms`;
+
+    const photos  = Array.isArray(p.images) ? p.images.filter(src => src && src.trim() !== '') : [];
+    const hasImg  = photos.length > 0;
+    const hasMany = photos.length > 1;
+    const imgHtml = hasImg
+      ? `<img class="product-photo" src="${photos[0]}" alt="${p.name}"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />`
+      : '';
+    const fallbackStyle = hasImg ? ' style="display:none"' : '';
+    const countHtml = hasMany
+      ? `<span class="photo-count">
+           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+           1/${photos.length}
+         </span>`
+      : '';
+
+    card.innerHTML = `
+      <div class="product-img-wrap${hasImg ? ' has-gallery' : ''}"${hasImg ? ` onclick="openGallery('${p.id}')"` : ''}>
+        ${imgHtml}
+        <div class="product-icon-fallback"${fallbackStyle}>
+          ${ICONS[p.icon] || ICONS.other}
+        </div>
+        ${p.destaque ? '<span class="product-badge">Destaque</span>' : ''}
+        ${countHtml}
+      </div>
+      <div class="product-body">
+        <div class="product-category">${p.category}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-specs">
+          ${p.specs.map(s => `
+            <div class="spec-item">
+              <span class="spec-label">${s.label}</span>
+              <span class="spec-value">${s.value}</span>
+            </div>`).join('')}
+        </div>
+        <div class="product-prices">
+          <div class="price-item">
+            <span class="price-label">Metal Polido</span>
+            <span class="price-value">${p.precoMetal}</span>
+          </div>
+          ${p.precoNiq ? `
+          <div class="price-item">
+            <span class="price-label">Niquelado</span>
+            <span class="price-value alt">${p.precoNiq}</span>
+          </div>` : ''}
+        </div>
+        <button
+          class="btn-add ${inBudget ? 'added' : ''}"
+          data-id="${p.id}"
+          onclick="toggleBudget('${p.id}')"
+          aria-label="${inBudget ? 'Remover do orçamento' : 'Adicionar ao orçamento'}: ${p.name}"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            ${inBudget
+              ? '<polyline points="20 6 9 17 4 12"/>'
+              : '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>'}
+          </svg>
+          ${inBudget ? 'Adicionado ao Orçamento' : 'Adicionar ao Orçamento'}
+        </button>
+      </div>`;
+
+    grid.appendChild(card);
+  });
+}
+
+/* ============================================================
+   GALERIA DE FOTOS (LIGHTBOX)
+============================================================ */
+function openGallery(productId) {
+  const product = products.find(p => p.id === productId);
+  if (!product) return;
+
+  const photos = Array.isArray(product.images) ? product.images.filter(src => src && src.trim() !== '') : [];
+  if (photos.length === 0) return;
+
+  galleryPhotos = photos;
+  galleryName   = product.name;
+  galleryIndex  = 0;
+
+  renderGallery();
+  document.getElementById('gallery-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderGallery() {
+  const img     = document.getElementById('gallery-img');
+  const nameEl  = document.getElementById('gallery-name');
+  const countEl = document.getElementById('gallery-count');
+  const thumbs  = document.getElementById('gallery-thumbs');
+  const prevBtn = document.querySelector('.gallery-nav.prev');
+  const nextBtn = document.querySelector('.gallery-nav.next');
+
+  img.src = galleryPhotos[galleryIndex];
+  img.alt = galleryName;
+  nameEl.textContent  = galleryName;
+  countEl.textContent = `Foto ${galleryIndex + 1} de ${galleryPhotos.length}`;
+
+  const showNav = galleryPhotos.length > 1;
+  prevBtn.style.display = showNav ? 'flex' : 'none';
+  nextBtn.style.display = showNav ? 'flex' : 'none';
+
+  thumbs.style.display = showNav ? 'flex' : 'none';
+  thumbs.innerHTML = showNav
+    ? galleryPhotos.map((src, i) => `
+        <img class="gallery-thumb ${i === galleryIndex ? 'active' : ''}"
+             src="${src}" alt="Foto ${i + 1}"
+             onclick="galleryGoTo(${i})" />`).join('')
+    : '';
+}
+
+function galleryGoTo(i) {
+  galleryIndex = i;
+  renderGallery();
+}
+
+function galleryPrev() {
+  galleryIndex = (galleryIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
+  renderGallery();
+}
+
+function galleryNext() {
+  galleryIndex = (galleryIndex + 1) % galleryPhotos.length;
+  renderGallery();
+}
+
+function closeGallery() {
+  document.getElementById('gallery-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ============================================================
+   TOGGLE ITEM NO ORÇAMENTO
+============================================================ */
+function toggleBudget(id) {
+  const product = products.find(p => p.id === id);
+  const idx     = budgetList.findIndex(b => b.id === id);
+
+  if (idx >= 0) {
+    budgetList.splice(idx, 1);
+  } else {
+    budgetList.push(product);
+  }
+
+  updateBudgetCount();
+  renderProducts();
+  renderPanelItems();
+}
+
+/* ============================================================
+   ATUALIZAR CONTADOR FLUTUANTE
+============================================================ */
+function updateBudgetCount() {
+  const floatBtn = document.getElementById('budget-float');
+  const counter  = document.getElementById('budget-count');
+  const count    = budgetList.length;
+
+  counter.textContent = count;
+
+  if (count > 0) {
+    floatBtn.classList.add('visible');
+    // Animação pop
+    counter.classList.remove('pop');
+    void counter.offsetWidth; // reflow
+    counter.classList.add('pop');
+  } else {
+    floatBtn.classList.remove('visible');
+  }
+}
+
+/* ============================================================
+   RENDERIZAR ITENS NO PAINEL
+============================================================ */
+function renderPanelItems() {
+  const list     = document.getElementById('panel-items-list');
+  const sendBtn  = document.getElementById('btn-send-wpp');
+
+  if (budgetList.length === 0) {
+    list.innerHTML = `
+      <div class="panel-empty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        <p>Nenhuma peça adicionada ainda.<br/>Clique em <strong>"Adicionar ao Orçamento"</strong> nos produtos desejados.</p>
+      </div>`;
+    sendBtn.disabled = true;
+    return;
+  }
+
+  sendBtn.disabled = false;
+
+  list.innerHTML = budgetList.map(p => `
+    <div class="budget-item">
+      <div class="bi-icon">${ICONS[p.icon] ? ICONS[p.icon].replace('class="product-icon"', 'style="width:20px;height:20px"') : ''}</div>
+      <div class="bi-info">
+        <div class="bi-name">${p.name}</div>
+        <div class="bi-cat">${p.category} · Metal: ${p.precoMetal}${p.precoNiq ? ' · Niq: ' + p.precoNiq : ''}</div>
+      </div>
+      <button class="bi-remove" onclick="toggleBudget('${p.id}')" aria-label="Remover ${p.name}">✕</button>
+    </div>`).join('');
+}
+
+/* ============================================================
+   ABRIR / FECHAR PAINEL
+============================================================ */
+function openPanel() {
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('budget-panel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderPanelItems();
+}
+
+function closePanel() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('budget-panel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Fechar com ESC / navegar galeria com as setas do teclado
+document.addEventListener('keydown', e => {
+  const galleryOpen = document.getElementById('gallery-overlay').classList.contains('open');
+  if (galleryOpen) {
+    if (e.key === 'Escape') closeGallery();
+    if (e.key === 'ArrowLeft') galleryPrev();
+    if (e.key === 'ArrowRight') galleryNext();
+    return;
+  }
+  if (e.key === 'Escape') closePanel();
+});
+
+// Fechar galeria clicando fora da imagem (no fundo escuro)
+document.getElementById('gallery-overlay').addEventListener('click', e => {
+  if (e.target.id === 'gallery-overlay') closeGallery();
+});
+
+/* ============================================================
+   LIMPAR ORÇAMENTO
+============================================================ */
+function clearBudget() {
+  if (budgetList.length === 0) return;
+  if (!confirm('Deseja limpar toda a lista de orçamento?')) return;
+  budgetList = [];
+  updateBudgetCount();
+  renderProducts();
+  renderPanelItems();
+}
+
+/* ============================================================
+   ENVIAR VIA WHATSAPP
+============================================================ */
+function sendWhatsApp() {
+  if (budgetList.length === 0) return;
+
+  const nome     = document.getElementById('f-nome').value.trim() || 'Não informado';
+  const paroquia = document.getElementById('f-paroquia').value.trim() || 'Não informada';
+
+  const itens = budgetList
+    .map((p, i) => `${i + 1}. ${p.name} (${p.category}) — Metal: ${p.precoMetal}${p.precoNiq ? ' / Niquelado: ' + p.precoNiq : ''}`)
+    .join('\n');
+
+  const msg = `Olá! Sou *${nome}* da *${paroquia}* e gostaria de solicitar um orçamento para os seguintes itens:\n\n${itens}\n\nAguardo retorno. Obrigado!`;
+
+  const url = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+/* ============================================================
+   FILTROS DE CATEGORIA
+============================================================ */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.cat;
+    renderProducts();
+  });
+});
+
+/* ============================================================
+   BUSCA EM TEMPO REAL
+============================================================ */
+let searchTimer;
+document.getElementById('search-input').addEventListener('input', e => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    searchTerm = e.target.value.toLowerCase().trim();
+    renderProducts();
+  }, 200);
+});
+
+/* ============================================================
+   NAVBAR — efeito scroll
+============================================================ */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ============================================================
+   INICIALIZAÇÃO
+============================================================ */
+renderProducts();
+</script>
+</body>
+</html>
