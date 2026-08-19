@@ -479,6 +479,7 @@
     }
     .product-desc {
       font-size: .8rem; color: var(--cinza); line-height: 1.6; flex: 1;
+      min-height: 4.8em; /* ~3 linhas — alinha specs/preço/botão entre cards com descrições de tamanhos diferentes */
     }
     .product-specs {
       display: flex; gap: .8rem; flex-wrap: wrap; padding: .6rem 0;
@@ -1203,7 +1204,7 @@
     <button class="gallery-nav prev" onclick="galleryPrev()" aria-label="Foto anterior">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
     </button>
-    <img class="gallery-img" id="gallery-img" src="" alt="" />
+    <img class="gallery-img" id="gallery-img" alt="" />
     <button class="gallery-nav next" onclick="galleryNext()" aria-label="Próxima foto">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
     </button>
@@ -1663,9 +1664,32 @@ const ICONS = {
 };
 
 /* ============================================================
+   PERSISTÊNCIA DO ORÇAMENTO (localStorage)
+============================================================ */
+const BUDGET_STORAGE_KEY = 'jedivaldo-budget-ids';
+
+function loadBudgetList() {
+  try {
+    const ids = JSON.parse(localStorage.getItem(BUDGET_STORAGE_KEY) || '[]');
+    if (!Array.isArray(ids)) return [];
+    return ids.map(id => products.find(p => p.id === id)).filter(Boolean);
+  } catch {
+    return [];
+  }
+}
+
+function saveBudgetList() {
+  try {
+    localStorage.setItem(BUDGET_STORAGE_KEY, JSON.stringify(budgetList.map(p => p.id)));
+  } catch {
+    // localStorage indisponível (modo privado, etc.) — segue só em memória
+  }
+}
+
+/* ============================================================
    ESTADO DA APLICAÇÃO
 ============================================================ */
-let budgetList  = [];
+let budgetList  = loadBudgetList();
 let activeFilter = 'Todos';
 let searchTerm   = '';
 
@@ -1686,7 +1710,8 @@ function renderProducts() {
     const matchCat  = activeFilter === 'Todos' || p.category === activeFilter;
     const matchSrch = p.name.toLowerCase().includes(searchTerm) ||
                       p.category.toLowerCase().includes(searchTerm) ||
-                      p.desc.toLowerCase().includes(searchTerm);
+                      p.desc.toLowerCase().includes(searchTerm) ||
+                      p.specs.some(s => `${s.label} ${s.value}`.toLowerCase().includes(searchTerm));
     return matchCat && matchSrch;
   });
 
@@ -1717,7 +1742,7 @@ function renderProducts() {
     const countHtml = hasMany
       ? `<span class="photo-count">
            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
-           1/${photos.length}
+           ${photos.length}
          </span>`
       : '';
 
@@ -1786,8 +1811,10 @@ function openGallery(productId) {
   galleryIndex  = 0;
 
   renderGallery();
-  document.getElementById('gallery-overlay').classList.add('open');
+  const overlay = document.getElementById('gallery-overlay');
+  overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
+  trapFocus(overlay);
 }
 
 function renderGallery() {
@@ -1834,6 +1861,7 @@ function galleryNext() {
 function closeGallery() {
   document.getElementById('gallery-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  releaseFocus();
 }
 
 /* ============================================================
@@ -1849,6 +1877,7 @@ function toggleBudget(id) {
     budgetList.push(product);
   }
 
+  saveBudgetList();
   updateBudgetCount();
   renderProducts();
   renderPanelItems();
@@ -1914,16 +1943,58 @@ function renderPanelItems() {
 ============================================================ */
 function openPanel() {
   document.getElementById('overlay').classList.add('open');
-  document.getElementById('budget-panel').classList.add('open');
+  const panel = document.getElementById('budget-panel');
+  panel.classList.add('open');
   document.body.style.overflow = 'hidden';
   renderPanelItems();
+  trapFocus(panel);
 }
 
 function closePanel() {
   document.getElementById('overlay').classList.remove('open');
   document.getElementById('budget-panel').classList.remove('open');
   document.body.style.overflow = '';
+  releaseFocus();
 }
+
+/* ============================================================
+   FOCO ACESSÍVEL — prende o Tab dentro do modal aberto
+   (painel de orçamento / galeria) e devolve o foco ao fechar
+============================================================ */
+let lastFocusedEl = null;
+let activeTrapEl   = null;
+
+function getFocusable(container) {
+  return Array.from(container.querySelectorAll(
+    'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  )).filter(el => el.offsetParent !== null);
+}
+
+function trapFocus(container) {
+  lastFocusedEl = document.activeElement;
+  activeTrapEl  = container;
+  const focusables = getFocusable(container);
+  if (focusables.length) focusables[0].focus();
+}
+
+function releaseFocus() {
+  activeTrapEl = null;
+  if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') lastFocusedEl.focus();
+  lastFocusedEl = null;
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Tab' || !activeTrapEl) return;
+  const focusables = getFocusable(activeTrapEl);
+  if (focusables.length === 0) return;
+  const first = focusables[0];
+  const last  = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault(); last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault(); first.focus();
+  }
+});
 
 // Fechar com ESC / navegar galeria com as setas do teclado
 document.addEventListener('keydown', e => {
@@ -1942,6 +2013,26 @@ document.getElementById('gallery-overlay').addEventListener('click', e => {
   if (e.target.id === 'gallery-overlay') closeGallery();
 });
 
+// Navegar a galeria com swipe (celular)
+(() => {
+  const stage = document.querySelector('.gallery-stage');
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  stage.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+  }, { passive: true });
+
+  stage.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if (galleryPhotos.length < 2) return;
+    if (dx < 0) galleryNext(); else galleryPrev();
+  }, { passive: true });
+})();
+
 /* ============================================================
    LIMPAR ORÇAMENTO
 ============================================================ */
@@ -1949,6 +2040,7 @@ function clearBudget() {
   if (budgetList.length === 0) return;
   if (!confirm('Deseja limpar toda a lista de orçamento?')) return;
   budgetList = [];
+  saveBudgetList();
   updateBudgetCount();
   renderProducts();
   renderPanelItems();
@@ -2052,6 +2144,7 @@ function injectProductSchema() {
    INICIALIZAÇÃO
 ============================================================ */
 renderProducts();
+updateBudgetCount();
 document.getElementById('footer-year').textContent = new Date().getFullYear();
 injectProductSchema();
 </script>
