@@ -4,6 +4,57 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>J. Edivaldo Arte Sacra — Catálogo Litúrgico</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Catálogo de peças litúrgicas em metal fundido: castiçais, cruzes, turíbulos e conjuntos de altar. Fundição artesanal desde 1978 em São João Del Rei, MG. Orçamento pelo WhatsApp." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://catalogo-jedivaldo.vercel.app/" />
+  <meta name="theme-color" content="#4a0404" />
+
+  <!-- Open Graph / WhatsApp, Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="J. Edivaldo Arte Sacra" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:url" content="https://catalogo-jedivaldo.vercel.app/" />
+  <meta property="og:title" content="J. Edivaldo Arte Sacra — Catálogo Litúrgico" />
+  <meta property="og:description" content="Castiçais, cruzes, turíbulos e conjuntos de altar em metal fundido. Peças artesanais direto da fábrica, desde 1978. Peça seu orçamento pelo WhatsApp." />
+  <meta property="og:image" content="https://catalogo-jedivaldo.vercel.app/images/meta/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="J. Edivaldo Arte Sacra — Catálogo de Peças Litúrgicas" />
+
+  <!-- Twitter/X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="J. Edivaldo Arte Sacra — Catálogo Litúrgico" />
+  <meta name="twitter:description" content="Castiçais, cruzes, turíbulos e conjuntos de altar em metal fundido. Peças artesanais direto da fábrica, desde 1978." />
+  <meta name="twitter:image" content="https://catalogo-jedivaldo.vercel.app/images/meta/og-image.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="images/meta/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/meta/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="images/meta/icon-512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/meta/apple-touch-icon.png" />
+
+  <!-- Dados estruturados (schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "J. Edivaldo Arte Sacra",
+    "image": "https://catalogo-jedivaldo.vercel.app/images/meta/og-image.jpg",
+    "description": "Fundição e arte litúrgica artesanal desde 1978: castiçais, cruzes, turíbulos e conjuntos de altar em metal fundido, dourado ou niquelado.",
+    "telephone": "+5532984497932",
+    "url": "https://catalogo-jedivaldo.vercel.app/",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "São João Del Rei",
+      "addressRegion": "MG",
+      "addressCountry": "BR"
+    }
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -1954,10 +2005,55 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 /* ============================================================
+   DADOS ESTRUTURADOS (Product) — gerado a partir de `products`
+   para nunca ficar desatualizado quando itens são adicionados.
+============================================================ */
+function injectProductSchema() {
+  const SITE = 'https://catalogo-jedivaldo.vercel.app';
+  const parsePrice = str => {
+    if (!str) return null;
+    const m = str.match(/[\d.,]+/);
+    if (!m) return null;
+    const val = parseFloat(m[0].replace(/\./g, '').replace(',', '.'));
+    return isNaN(val) ? null : val;
+  };
+
+  const graph = products
+    .filter(p => p.images && p.images.length > 0)
+    .map(p => {
+      const price = parsePrice(p.precoMetal) ?? parsePrice(p.precoNiq);
+      const item = {
+        '@type': 'Product',
+        name: p.name,
+        description: p.desc,
+        image: p.images.map(img => `${SITE}/${img}`),
+        category: p.category,
+        brand: { '@type': 'Brand', name: 'J. Edivaldo Arte Sacra' },
+      };
+      if (price) {
+        item.offers = {
+          '@type': 'Offer',
+          priceCurrency: 'BRL',
+          price: price.toFixed(2),
+          availability: 'https://schema.org/InStock',
+          url: `${SITE}/#catalogo`,
+        };
+      }
+      return item;
+    });
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+  document.head.appendChild(script);
+}
+
+/* ============================================================
    INICIALIZAÇÃO
 ============================================================ */
 renderProducts();
 document.getElementById('footer-year').textContent = new Date().getFullYear();
+injectProductSchema();
 </script>
 </body>
 </html>
