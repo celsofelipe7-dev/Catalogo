@@ -1070,7 +1070,7 @@
   </div>
 
   <div class="footer-divider"></div>
-  <p class="footer-copy">© 2024 J. Edivaldo Arte Sacra — Todos os direitos reservados</p>
+  <p class="footer-copy">© <span id="footer-year"></span> J. Edivaldo Arte Sacra — Todos os direitos reservados</p>
 </footer>
 
 
@@ -1957,6 +1957,7 @@ window.addEventListener('scroll', () => {
    INICIALIZAÇÃO
 ============================================================ */
 renderProducts();
+document.getElementById('footer-year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
