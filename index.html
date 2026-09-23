@@ -1022,6 +1022,7 @@
     <button class="filter-btn active" data-cat="Todos">Todos</button>
     <button class="filter-btn" data-cat="Conjuntos">Conjuntos</button>
     <button class="filter-btn" data-cat="Castiçais">Castiçais</button>
+    <button class="filter-btn" data-cat="Alfaias">Alfaias</button>
     <button class="filter-btn" data-cat="Cruzes">Cruzes</button>
     <button class="filter-btn" data-cat="Carrilhões">Carrilhões</button>
     <button class="filter-btn" data-cat="Círios">Círios</button>
@@ -1236,7 +1237,7 @@ const CONFIG = {
    Campos:
      id        : identificador único (não altere)
      name      : nome do produto
-     category  : Conjuntos | Castiçais | Cruzes | Carrilhões | Círios | Outros
+     category  : Conjuntos | Castiçais | Alfaias | Cruzes | Carrilhões | Círios | Outros
      desc      : descrição curta
      specs     : array de { label, value }
      precoMetal: preço em metal polido (string, ex: "R$ 450,00")
@@ -1506,6 +1507,7 @@ const products = [
     precoMetal: 'A definir',
     precoNiq:   'A definir',
     images: [
+      'images/donzelas/donzelas-manga-vidro.jpg',
       'images/conjunto-romano-avulso.jpeg',
       'images/conjunto-romano.jpeg',
       'images/conjunto-romano-base.jpeg',
@@ -1526,6 +1528,149 @@ const products = [
     images: [],
     destaque: true,
     icon: 'candle',
+  },
+
+  /* === ALFAIAS (vasos sagrados) ============================ */
+  {
+    id: 'calice-barroco-pedras',
+    name: 'Cálice Barroco com Pedras',
+    category: 'Alfaias',
+    desc: 'Copa com renda cinzelada e medalhões, nó e base barrocos cravejados de pedras. Disponível dourado com pedras vermelhas ou prateado com pedras azuis.',
+    specs: [{ label: 'Acabamento', value: 'Dourado ou prateado' }, { label: 'Pedras', value: 'Vermelhas ou azuis' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/calice-barroco-dourado.jpg',
+      'images/alfaias/calice-barroco-prata.jpg',
+    ],
+    destaque: true,
+    icon: 'chalice',
+  },
+  {
+    id: 'ambula-barroca-pedras',
+    name: 'Âmbula Barroca com Pedras',
+    category: 'Alfaias',
+    desc: 'Copa polida envolta em renda de folhagens, nó e base cinzelados com pedras vermelhas e tampa com cruz. Faz par com o Cálice Barroco com Pedras.',
+    specs: [{ label: 'Acabamento', value: 'Dourado' }, { label: 'Pedras', value: 'Vermelhas' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/ambula-barroca.jpg',
+    ],
+    destaque: false,
+    icon: 'chalice',
+  },
+  {
+    id: 'calice-bicolor-medalhoes',
+    name: 'Cálice Bicolor com Medalhões',
+    category: 'Alfaias',
+    desc: 'Copa dourada com renda prateada e pedras vermelhas, nó cinzelado e base polilobada com medalhões em prata aplicados.',
+    specs: [{ label: 'Acabamento', value: 'Dourado com prata' }, { label: 'Pedras', value: 'Vermelhas' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/calice-bicolor-medalhoes.jpg',
+    ],
+    destaque: false,
+    icon: 'chalice',
+  },
+  {
+    id: 'calice-bicolor-rendado',
+    name: 'Cálice Bicolor Rendado',
+    category: 'Alfaias',
+    desc: 'Copa prateada sustentada por renda dourada vazada, nó em volutas e base com medalhões prateados e friso vazado.',
+    specs: [{ label: 'Acabamento', value: 'Prata e dourado' }, { label: 'Base', value: 'Friso vazado' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/calice-bicolor-rendado.jpg',
+    ],
+    destaque: false,
+    icon: 'chalice',
+  },
+  {
+    id: 'calice-cinzelado-uvas',
+    name: 'Cálice Cinzelado com Uvas',
+    category: 'Alfaias',
+    desc: 'Copa dourada com bojo prateado cinzelado em folhagens. Base com cachos de uva em relevo, símbolo eucarístico.',
+    specs: [{ label: 'Acabamento', value: 'Dourado com prata' }, { label: 'Base', value: 'Uvas em relevo' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/calice-cinzelado-uvas.jpg',
+    ],
+    destaque: false,
+    icon: 'chalice',
+  },
+  {
+    id: 'calice-gotico',
+    name: 'Cálice Gótico',
+    category: 'Alfaias',
+    desc: 'Linhas góticas sóbrias: copa cônica com folhas estilizadas, nó gomado e base em gomos com textura em losangos.',
+    specs: [{ label: 'Estilo', value: 'Gótico' }, { label: 'Acabamento', value: 'Metal polido' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/calice-gotico.jpg',
+    ],
+    destaque: false,
+    icon: 'chalice',
+  },
+  {
+    id: 'calice-niquelado-base-barroca',
+    name: 'Cálice Niquelado com Base Barroca',
+    category: 'Alfaias',
+    desc: 'Copa lisa em tulipa e haste torneada sobre base tripé com volutas e flores cinzeladas. Acabamento 100% niquelado.',
+    specs: [{ label: 'Acabamento', value: 'Niquelado' }, { label: 'Base', value: 'Tripé barroco' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/calice-niquelado-barroco.jpg',
+    ],
+    destaque: false,
+    icon: 'chalice',
+  },
+  {
+    id: 'ostensorio-espirito-santo',
+    name: 'Ostensório Espírito Santo',
+    category: 'Alfaias',
+    desc: 'Resplendor de raios com luneta central cercada de volutas e pedras vermelhas, encimado pela pomba do Espírito Santo. Haste barroca e base tripé.',
+    specs: [{ label: 'Remate', value: 'Pomba' }, { label: 'Pedras', value: 'Vermelhas' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/ostensorio-espirito-santo.jpg',
+    ],
+    destaque: true,
+    icon: 'monstrance',
+  },
+  {
+    id: 'ostensorio-cruz-pedras',
+    name: 'Ostensório com Cruz e Pedras',
+    category: 'Alfaias',
+    desc: 'Resplendor de raios longos, moldura da luneta cinzelada com pedras vermelhas e cruz trevolada no topo. Haste em nós barrocos e base tripé.',
+    specs: [{ label: 'Remate', value: 'Cruz' }, { label: 'Pedras', value: 'Vermelhas' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/ostensorio-cruz-pedras.jpg',
+    ],
+    destaque: false,
+    icon: 'monstrance',
+  },
+  {
+    id: 'ostensorio-trabalhado',
+    name: 'Ostensório Trabalhado',
+    category: 'Alfaias',
+    desc: 'Resplendor dourado de raios escalonados, luneta com moldura trabalhada e cruz com pedra no topo. Nó cinzelado e base tripé com folhagens.',
+    specs: [{ label: 'Altura', value: '61,2 cm' }, { label: 'Diâmetro', value: '32,1 cm' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/alfaias/ostensorio-trabalhado.jpg',
+    ],
+    destaque: false,
+    icon: 'monstrance',
   },
 
   /* === CRUZES ================================================ */
@@ -1636,6 +1781,21 @@ const products = [
     icon: 'candle',
   },
   {
+    id: 'castical-cirio-gotico-nichos',
+    name: 'Castiçal Gótico para Círio Pascal',
+    category: 'Círios',
+    desc: 'Castiçal de chão em estilo neogótico, com fuste de pináculos e nichos com imagens de santos em relevo prateado. Base com patas em volutas. Peça imponente para o presbitério.',
+    specs: [{ label: 'Estilo', value: 'Neogótico' }, { label: 'Acabamento', value: 'Dourado e prata' }],
+    precoMetal: 'A definir',
+    precoNiq:   'A definir',
+    images: [
+      'images/cirio-gotico-nichos/cirio-gotico-nichos.jpg',
+      'images/cirio-gotico-nichos/cirio-gotico-nichos-detalhe.jpg',
+    ],
+    destaque: false,
+    icon: 'candle',
+  },
+  {
     id: 'porta-cirio-ambao',
     name: 'Porta-Círio de Ambão',
     category: 'Círios',
@@ -1664,19 +1824,19 @@ const products = [
   {
     id: 'turibulo-completo-naveta',
     name: 'Turíbulo Completo com Naveta',
-    category: 'Outros',
-    desc: 'Turíbulo artesanal com correntes em metal e naveta. Peça completa para liturgia com incenso.',
+    category: 'Alfaias',
+    desc: 'Turíbulo niquelado com tampa vazada, bojo com guirlanda em relevo e correntes, acompanhado de naveta. Peça completa para a liturgia com incenso.',
     specs: [{ label: 'Altura c/ corrente', value: '80 cm' }, { label: 'Peças', value: '2 (turíbulo + naveta)' }],
     precoMetal: 'R$ 890,00',
     precoNiq:   'R$ 740,00',
-    images: [],
+    images: ['images/alfaias/turibulo-niquelado.jpg'],
     destaque: true,
-    icon: 'crown',
+    icon: 'chalice',
   },
   {
     id: 'aspersorio-hissope',
     name: 'Aspersório com Hissope',
-    category: 'Outros',
+    category: 'Alfaias',
     desc: 'Aspersório com hissope e corrente. Fundição sólida, fácil manutenção. Utilizado na bênção da água.',
     specs: [{ label: 'Comprimento', value: '30 cm' }, { label: 'Material', value: 'Metal polido' }],
     precoMetal: 'R$ 195,00',
@@ -1797,6 +1957,20 @@ const products = [
    ÍCONES SVG INTERNOS
 ============================================================ */
 const ICONS = {
+  chalice: `<svg class="product-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 6h22c0 9-4.5 15-11 15S13 15 13 6z"/>
+    <line x1="24" y1="21" x2="24" y2="36"/>
+    <ellipse cx="24" cy="28" rx="3" ry="2"/>
+    <path d="M15 42c0-4 4-6 9-6s9 2 9 6z"/>
+  </svg>`,
+
+  monstrance: `<svg class="product-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="24" cy="17" r="5"/>
+    <path d="M24 3v4M24 27v4M10 17h4M34 17h4M14 7l3 3M34 7l-3 3M14 27l3-3M34 27l-3-3"/>
+    <line x1="24" y1="31" x2="24" y2="40"/>
+    <path d="M16 45c0-3 4-5 8-5s8 2 8 5z"/>
+  </svg>`,
+
   candle: `<svg class="product-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M24 6c0 0-3-4-3-6 0 0 6 2 6 6-1.5 0-3 0-3 0z" fill="currentColor" opacity=".4"/>
     <rect x="19" y="6" width="10" height="28" rx="1.5"/>
@@ -1919,7 +2093,7 @@ function renderProducts() {
     const hasImg  = photos.length > 0;
     const hasMany = photos.length > 1;
     const imgHtml = hasImg
-      ? `<img class="product-photo" src="${photos[0]}" alt="${p.name}"
+      ? `<img class="product-photo" src="${photos[0]}" alt="${p.name}" loading="lazy" decoding="async"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />`
       : '';
     const fallbackStyle = hasImg ? ' style="display:none"' : '';
